@@ -1,0 +1,53 @@
+footer {
+    
+    margin-top: 30px;
+    
+    .top {
+        position: fixed;
+        bottom: 100px;
+        right: 100px;
+
+        a {
+            color: #fff;
+            width: 70px;
+            height: 70px;
+            border-radius: 100%;
+            background: $orange-med;
+            display: inline-block;
+            text-align: center;
+            transition: opacity .225s ease 0s;
+
+            &:hover {
+                opacity: .6;
+            }
+
+            span {
+                font-size: 40px;
+                color: #fff;
+                line-height: 60px;
+            }
+        }
+    }
+    
+    .footer-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: lighten($orange-med, 40%);
+        color: darken($orange-med, 10%);
+        
+        .footer-bar-inner {
+            text-align: center;
+            height: 35px;
+            line-height: 35px;
+            
+            .copyright {
+                a {
+                    font-family: $font-purisa;
+                }
+            }
+        }
+        
+    }
+}

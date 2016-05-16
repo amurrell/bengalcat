@@ -1,0 +1,159 @@
+body {
+    margin: 30px;
+    position: relative;
+    font-family: 'Raleway', sans-serif;
+}
+h3 {
+    font-size: 25px;
+}
+
+.highlight {
+    background: aquamarine;
+    padding: 10px;
+}
+
+.top {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+}
+.top a {
+    color: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    background: #d98d45;
+    display: inline-block;
+    text-align: center;
+    transition: opacity .225s ease 0s;
+}
+.top a:hover {
+    opacity: .6;
+}
+.top a span {
+    font-size: 40px;
+    color: #fff;
+    line-height: 60px;
+}
+a {
+    color: #b83321;
+}
+a:hover {
+    text-decoration: none;
+    color: #e6604e;
+}
+#top {
+    margin-top: 60px;
+    position: relative;
+    font-family: 'Amatic SC', cursive;
+    font-size: 100px;
+}
+#top:before {
+    content: '';
+    height: 168px;
+    width: 239px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    background: url('images/sandbox-logo.png') no-repeat center center;
+}
+.button-container {
+    position: fixed;
+    right: 100px;
+    top: 0;
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    font-weight:bold;
+}
+.button-container .btn {
+    width: 130px;
+    display: inline-block;
+    text-align: center;
+    margin: 0 5px 5px;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+}
+
+.message {
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    color: #d98d45;
+    font-weight:bold;
+    padding: 20px;
+    border: 2px dotted #ddd;
+    margin: 5px 0;
+}
+
+.error {
+    color: #e6604e;
+}
+
+.btn {
+    background: #e6604e;
+    border-radius: 0;
+    padding: 10px 40px;
+    color: #fff;
+    transition: background .225s ease 0s;
+    font-size: 25px;
+    font-weight:bold;
+}
+.btn:hover {
+    color: #fff;
+    background: #b83321;
+}
+
+.container .btn {
+    font-family: 'Amatic SC', cursive;
+}
+
+.well {
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    box-shadow: 0 2px 2px #ddd;
+    text-shadow: 1px 1px #fff;
+}
+
+.navigation ul {
+    padding: 0;
+    margin-top: 30px;
+}
+
+.navigation li {
+    list-style-type: none;
+    margin: 10px;
+    box-shadow: 0 2px 2px #ddd;
+    text-shadow: none;
+}
+
+.navigation li a {
+    display: block;
+    padding: 10px;
+    background: #fff;
+    font-size: 20px;
+}
+
+.navigation li:hover a,
+.navigation li.active a {
+    background: #e6604e;
+    color: #fff;
+}
+
+/* TWITTER OVERDOSE */
+.state-buttons {
+    font-size: 0;
+    width: 100%;
+}
+.state-buttons .btn {
+    font-size: 20px;
+    margin: 2px;
+    padding: 5px;
+    width: 150px;
+    background: #d98d45;
+}
+.state-buttons .btn.sql-done {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 3px;
+    color: #ddd;
+}

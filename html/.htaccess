@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Redirect /index.php to / (optional, but recommended I guess)
+    RewriteBase /
+    RewriteCond %{THE_REQUEST} index\.php
+    RewriteRule ^(.*)index\.(html|php)$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+    # Force trailing slash
+    RewriteCond %{REQUEST_URI} /+[^\.]+$
+    RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
+
+    # All PHP files to index.php
+    RewriteCond %{REQUEST_URI} \.(php)$
+    RewriteRule .*\.php$ index.php?q=%{REQUEST_URI} [L]
+    
+    # Now check for any files that don't exist 
+    # and route them through to index.php too.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /index.php?path=$1 [NC,L]
+</IfModule>
