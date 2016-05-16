@@ -1,6 +1,6 @@
 # BengalCat
 
-Very little abstraction. No community. Hardly any [docs](http://www.bengalcat.io/docs).
+Very little abstraction. No community. Hardly any docs.
 
 _On purpose_...
 
