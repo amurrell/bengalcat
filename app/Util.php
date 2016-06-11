@@ -4,7 +4,7 @@ namespace Bc\App;
 
 
 class Util {
-    
+
     /**
      * Print the contents of a variable
      * @param mixed $var The variable to print contents of
@@ -30,7 +30,7 @@ class Util {
         }
         echo '<pre>';print_r($var); echo '</pre>';
     }
-    
+
     /**
      * Make a curl call
      * @param string $url The url to call with curl
@@ -66,33 +66,33 @@ class Util {
         return $data;
 
     }
-    
+
     static public function getClassName($className)
     {
         return preg_replace('/.*'. preg_quote('\\') .'/', '', $className);
     }
-    
+
     static public function getQueryVars($url = null, $query = null) {
         $query_vars = array();
         $queryData = (empty($url)) ? $query : parse_url($url)['query'];
         parse_str( $queryData, $query_vars );
         return $query_vars;
     }
-    
+
     static public function trigger404($bc) {
         header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
         $bc->setRouteClass('Error404');
         $error404page = new \Bc\App\Error404($bc);
         exit();
     }
-    
+
     static public function triggerError($returnData) {
         header('Content-Type: application/json');
         header($_SERVER["SERVER_PROTOCOL"]." {$returnData['error_code']}", true, $returnData['error_code']);
         echo json_encode($returnData);
         exit();
     }
-    
+
     static public function slugify($text)
     {
         // replace non letter or digits by -
@@ -119,9 +119,9 @@ class Util {
 
         return $text;
     }
-    
+
     static public function getTemplateContents($path, $data = null) {
-        
+
         if (!file_exists($path)) {
             self::triggerError(array(
                 'success' => false,
@@ -129,15 +129,15 @@ class Util {
                 'message' => 'Missing/Incorrect Template File'
             ));
         }
-        
+
         ob_start();
         include $path;
         return ob_get_clean();
     }
-    
-    
+
+
     static public function getImage($imageName) {
-        $path = ASSETS_DIR . 'img/' . $imageName;
+        $path = ASSETS_DIR . 'build/img/' . $imageName;
         $relative = str_replace(INDEX_DIR, '/', $path);
         return file_exists($path) ? $relative : '';
     }

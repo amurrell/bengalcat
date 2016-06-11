@@ -25,8 +25,8 @@
   font-family: "Purisa";
   font-weight: normal;
   font-style: normal;
-  src: url("../../fonts/purisa-webfont.eot");
-  src: url("../../fonts/purisa-webfont.eot?#iefix") format("embedded-opentype"), url("../../fonts/purisa-webfont.woff") format("woff"), url("../../fonts/purisa-webfont.ttf") format("truetype"), url("../../fonts/purisa-webfont.svg#Purisa") format("svg"); }
+  src: url("../fonts/purisa-webfont.eot");
+  src: url("../fonts/purisa-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/purisa-webfont.woff") format("woff"), url("../fonts/purisa-webfont.ttf") format("truetype"), url("../fonts/purisa-webfont.svg#Purisa") format("svg"); }
 
 .clearfix:after, header:after, header nav:after {
   visibility: hidden;
@@ -118,7 +118,7 @@ header #top {
   font-family: "Purisa", sans-serif;
   font-size: 1.5em;
   height: 30vh;
-  background: url("../../img/bg-pattern.jpg");
+  background: url("../img/bg-pattern.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   color: #fff;

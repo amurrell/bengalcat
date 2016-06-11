@@ -40,7 +40,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 $nav-height: 40px;
 $nav-height-offset: 53px;
 
-@include font-face('Purisa', '../../fonts/purisa-webfont');
+@include font-face('Purisa', '../fonts/purisa-webfont');
 
 $font-roboto: 'Roboto', sans-serif;
 $font-ubuntu: 'Ubuntu Condensed', sans-serif;
