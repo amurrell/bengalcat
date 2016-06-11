@@ -97,7 +97,6 @@
 
 
 @mixin button-custom($background, $font-color, $hover-font-color: $font-color, $border-radius: 6px) {
-    @extend .btn-default;
     background: $background;
     border:none;
     border-radius: $border-radius;

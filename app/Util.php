@@ -79,9 +79,10 @@ class Util {
         return $query_vars;
     }
     
-    static public function trigger404() {
+    static public function trigger404($bc) {
         header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        include SRC_DIR . '404.php';
+        $bc->setRouteClass('Error404');
+        $error404page = new \Bc\App\Error404($bc);
         exit();
     }
     

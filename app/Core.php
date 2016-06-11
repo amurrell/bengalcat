@@ -61,7 +61,7 @@ class Core {
         $this->routes = include_once APP_DIR . 'config/routes.php';
         
         if (empty($this->routes)) {
-            $this->util->trigger404();
+            $this->util->trigger404($this);
         }
         
         // Use regex to match non-exact routes
@@ -83,7 +83,7 @@ class Core {
         }
         
         if (empty($this->routeClassPath)) {
-            $this->util->trigger404();
+            $this->util->trigger404($this);
         }
         else {
             $this->routeClass = $this->util->getClassName($this->routeClassPath);
@@ -139,5 +139,13 @@ class Core {
         return $this->routeVariant;
     }
 
+    public function setRouteClass($routeClass)
+    {
+        // Only set if it is empty
+        if (empty($this->routeClass)) {
+            $this->routeClass = $routeClass;
+        }
+        return $this;
+    }
 }
 

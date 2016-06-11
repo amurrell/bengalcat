@@ -1,7 +1,7 @@
 <div class="container">
     
     <h1 class="text-center">
-        A nimble framework for PHP developers.
+        A Nimble Framework for PHP Developers.
     </h1>
 
     <hr/>

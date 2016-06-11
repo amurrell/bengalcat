@@ -41,6 +41,8 @@ abstract class RouteClass {
     
     protected function render($renderPath, $data = null, $tokens = array())
     {
+        $tokens['[bc:routeClass]'] = $this->bc->getRouteClass();
+        
         // Begin output buffering for render include
         $renderData = $this->bc->util->getTemplateContents($renderPath, $data);
         

@@ -2,7 +2,7 @@
 <html>
     [bc:head]
     
-    <body>
+    <body class="[bc:routeClass]">
         <header>
             <nav>
                 <div class="container">
