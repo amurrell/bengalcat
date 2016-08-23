@@ -29,11 +29,18 @@ More ideas of what you're doing with BengalCat:
 
 ### Install
 
-`sudo docker-compose up`
+1. Download repo
 
-Go to http://localhost:3000
+2.
 
-- Or read the full `INSTALL.md` which explains basic docker commands, advanced manipulation of our dockerfile and how to use npm for assets.
+```
+cd DockerLocal
+sudo docker-compose up
+```
+
+3. Go to [http://localhost:3000](http://localhost:3000)
+
+- Or read the full [INSTALL.md](https://github.com/amurrell/bengalcat/blob/master/INSTALL.md) which explains basic docker commands, advanced manipulation of our dockerfile and how to use npm for assets.
 
 ### Setup Routes
 
