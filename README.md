@@ -29,8 +29,11 @@ More ideas of what you're doing with BengalCat:
 
 ### Install
 
-- Read the `INSTALL.md` and ensure you have a working webserver with PHP
-    - Install also goes over NodeJS, npm if you want to use it.
+`sudo docker-compose up`
+
+Go to http://localhost:3000
+
+- Or read the full `INSTALL.md` which explains basic docker commands, advanced manipulation of our dockerfile and how to use npm for assets.
 
 ### Setup Routes
 

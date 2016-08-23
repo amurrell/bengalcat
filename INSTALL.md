@@ -1,53 +1,139 @@
-# BengalCat.io - Installation
-
-This is PHP. So, it's a pain - and the learning curve can be annoying. So bare with me.
-
-You should probably know how to setup a web server or be using a pretty generic pre-built one.
+# BengalCat PHP Framework - Local Development Installation
 
 Requirements:
 
-    - There aren't any if you want to write your own code / edit mine, which...
-            - ... I really encourage that you hack my code up
-            - please fork this project!
-    - You should have a local web server, because without URL rewriting, this framework dies.
-    - If using apache you shouldn't have to write the rewrites, there's an htaccess file.
-    
-Ok, tested with:
+- You will need to install **docker** and **docker-compose** on your own.
 
-    - Apache2
-    - PHP 7.0
-    - Uses PDO for Db Class
-        - which assumes mysql right now
+## Install & Run - Docker Compose
 
-## Web Server Setup
+`sudo docker-compose up`
 
-1. Be sure to point the document root to the `html` folder of the repo.
-1. Adjust any configuration environmental variables.
+Go to http://localhost:3000
 
-### APACHE2
+## Install & Run - Not docker compose...
 
-Should be able to use .htaccess file included in the repo. This file routes
-everything through index.php, adds trailing slashes, and redirects index.php to /
+Make sure you are in the root of the repository, where the docker-compose.yml is.
 
-1. In your configuration, be sure to `AllowOverride all`.
-1. Enable the rewrite module: `a2enmod rewrite` and `service apache2 reload`
+```
+sudo docker build -t mysitename .
+sudo docker run -d -p 3000:80 -v `pwd`:/var/www/site mysitename
+```
 
-#### Mods / Packages
+Go to http://localhost:3000
 
-1. You will need PDO in your ini and other mysql related ini files
+## Get Name of your Container for all other commands
 
-### NGINX
+Observe the NAME of your mysitename container
 
-Should push all non-files and all *.php files through index.php
+`sudo docker ps -a`
 
-    location / {
-        try_files $uri $uri/ /index.php?$args;
-    }
+## Check logs
 
-More help coming soon...
+`sudo docker logs CONTAINER_NAME`
 
+## Get to the commandline of your image IF it IS RUNNING
+
+`sudo docker exec -t -i CONTAINER_NAME /bin/bash`
+
+## Get to the command line of your container IF NOT RUNNING
+
+Observe name of image, probably your sitefolder_web
+`sudo docker images`
+
+Use it below:
+
+`sudo docker run -it IMAGE_NAME /bin/bash`
+
+
+## Stop your container
+
+`sudo docker stop CONTAINER_NAME`
 
 ---
+
+# Basic Docker Help
+
+Refer to this doc: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-getting-started
+
+----
+
+## Start docker
+
+`sudo docker -d &`
+
+## Test the Install
+
+`sudo docker run hello-world`
+
+## List available images
+
+`sudo docker images`
+
+## Commit changes to an image (save state)
+
+`sudo docker commit [container ID] [image name]`
+
+## Sharing your image by pushing
+
+`sudo docker push my_username/my_first_image`
+
+(you would need to sign up on index.docker.io to push images to docker index)
+
+## List running containers
+
+`sudo docker ps`
+
+## List running AND non-running containers
+
+`sudo docker ps -l`
+
+## To get command access to a running container
+
+`sudo docker exec -t -i container_name /bin/bash`
+
+where you get the container_id from listing the containers
+
+and if it was not running:
+
+`sudo docker run -it --entrypoint /bin/bash`
+
+## Remove containers
+
+`sudo docker rm container ID`
+
+----
+
+# Advanced Docker Manipulation
+
+
+## Install more packages, php libraries and so on
+
+Your Dockerfile can be edited to install more things if you need. 
+
+Add to dockerfile at least before CMD
+
+```
+RUN apt-get update && \
+    apt-get install -y a-package && \
+    apt-get install -y another-package
+```
+
+## Update your environmental variables
+
+Maybe you want to set the database environmental variables. 
+
+1. Edit the php7-fpm.site.conf to reflect these env var changes.
+2. Need to rebuild. Either `sudo docker-compose build` or `sudo docker build -t mysitename`
+3. Need to rerun the container. Either `sudo docker-compose up` or `sudo docker run -d -p 3000:8080 -v ./:/var/www/site mysitename`
+
+## Update specific nginx config or location blocks
+
+Maybe you want to edit your site's nginx configuration
+
+1. Edit the nginx.site.conf to reflect those config changes.
+2. Need to rebuild, need to restart - so refer to that in the section above, 2. and 3.
+
+----
 
 ## Node Setup
 
@@ -73,4 +159,3 @@ Additionally, on linux, was running into issues when trying to `gulp watch`
 which was solved by:
 
     `echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
-
