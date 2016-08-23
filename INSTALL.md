@@ -6,22 +6,17 @@ Requirements:
 
 ## Install & Run - Docker Compose
 
-1. Download repo
-
-2.
+Download repo
 
 ```
 cd DockerLocal
 sudo docker-compose up
 ```
-
-3. Go to [http://localhost:3000](http://localhost:3000)
+Go to [http://localhost:3000](http://localhost:3000)
 
 ## Install & Run - Not docker compose...
 
-1. Download repo
-
-2.
+Download repo
 
 ```
 cd DockerLocal
@@ -29,7 +24,7 @@ sudo docker build -t mysitename .
 sudo docker run -d -p 3000:80 -v `pwd | sed 's,/*[^/]\+/*$,,'`:/var/www/site mysitename
 ```
 
-3. Go to [http://localhost:3000](http://localhost:3000)
+Go to [http://localhost:3000](http://localhost:3000)
 
 ---
 

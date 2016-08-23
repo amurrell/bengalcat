@@ -166,7 +166,7 @@ For the people who REALLY like reading.
 
 ** Note ** ALL directory path's (referred to in the dir constants below) include your `your/projectroot/` in them!
 
-#### Index.php hardly doesn't much, but so important.
+#### Index.php hardly does much, but so important.
 
 index.php autoloads all your classes, but only classes in `app` and `app/classes`. This is really the only place classes should go.
 
