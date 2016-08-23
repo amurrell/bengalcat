@@ -6,20 +6,34 @@ Requirements:
 
 ## Install & Run - Docker Compose
 
-`sudo docker-compose up`
+1. Download repo
 
-Go to http://localhost:3000
+2.
+
+```
+cd DockerLocal
+sudo docker-compose up
+```
+
+3. Go to [http://localhost:3000](http://localhost:3000)
 
 ## Install & Run - Not docker compose...
 
-Make sure you are in the root of the repository, where the docker-compose.yml is.
+1. Download repo
+
+2.
 
 ```
+cd DockerLocal
 sudo docker build -t mysitename .
-sudo docker run -d -p 3000:80 -v `pwd`:/var/www/site mysitename
+sudo docker run -d -p 3000:80 -v `pwd | sed 's,/*[^/]\+/*$,,'`:/var/www/site mysitename
 ```
 
-Go to http://localhost:3000
+3. Go to [http://localhost:3000](http://localhost:3000)
+
+---
+
+# Access Terminal, View Logs ...
 
 ## Get Name of your Container for all other commands
 

@@ -3,4 +3,4 @@ web:
     ports:
         - "3000:80"
     volumes:
-        - ./:/var/www/site
+        - ../:/var/www/site
