@@ -2,7 +2,8 @@
 
 namespace Bc\App;
 
-use \Bc\App\Util;
+use Bc\App\Util;
+use Exception;
 
 class Core {
 
@@ -104,8 +105,23 @@ class Core {
     }
 
     protected function newRoute() {
-        $this->routeAction = new $this->routeClassPath($this);
-
+        
+        try {
+            if (!class_exists($this->routeClassPath)) {
+                throw new Exception();
+            }
+            
+            $this->routeAction = new $this->routeClassPath($this);
+        } catch (Exception $e) {
+            $this->util->triggerError(
+                array(
+                    'success' => false,
+                    'error_code' => 501,
+                    'message' => 'This route has not been fully implemented. Check controller exists.'
+                )
+            );
+        }
+        
         return $this;
     }
 
