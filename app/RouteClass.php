@@ -47,15 +47,15 @@ abstract class RouteClass {
         $renderData = $this->bc->util->getTemplateContents($renderPath, $data);
         
         // Get Header Output
-        $header = $this->bc->util->getTemplateContents($this->getHeader(), $data);
-        $head = $this->bc->util->getTemplateContents($this->getHead(), $data);
+        $header = $this->getHeaderContents($data);
+        $head = $this->getHeadContents($data);
         
         // Replace [head] token with head data - render will do automatically.
         // Other tokens to be dealt with separately.
         $renderHeader = str_replace('[bc:head]', $head, $header);
         
         // Get Footer Output
-        $renderFooter = $this->bc->util->getTemplateContents($this->getFooter(), $data);
+        $renderFooter = $this->getFooterContents($data);
         
         // Fix any other tokens
         $content = $renderHeader . $renderData . $renderFooter;
@@ -64,6 +64,21 @@ abstract class RouteClass {
         
         // Paint the render!
         echo $echoContent;
+    }
+    
+    protected function getHeaderContents($data)
+    {
+        return $this->bc->util->getTemplateContents($this->getHeader(), $data);
+    }
+    
+    protected function getHeadContents($data)
+    {
+        return $this->bc->util->getTemplateContents($this->getHead(), $data);
+    }
+    
+    protected function getFooterContents($data)
+    {
+        return $this->bc->util->getTemplateContents($this->getFooter(), $data);
     }
     
     /**

@@ -13,6 +13,9 @@ RUN         apt-get update && \
             apt-get clean && \
             rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
+RUN         apt-get update && \
+            apt-get install -y php-curl
+
 # export var for nano to work in command line
 ENV TERM xterm
 

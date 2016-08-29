@@ -10,6 +10,8 @@ class Core {
     public $util;
 
     private $dir;
+    private $queryParams;
+    private $queryParamsString;
     private $queryString;
     private $queryVars;
     private $method;
@@ -47,13 +49,19 @@ class Core {
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->queryString = $_SERVER['QUERY_STRING'];
+        $this->queryParamsString = file_get_contents('php://input');
+        $this->queryParams = $this->util->getQueryVars(
+            null, 
+            $this->queryParamsString
+        );
         $this->queryVars = $this->util->getQueryVars(
-                null,
-                $this->queryString);
+            null,
+            $this->queryString);
 
         $this->route = str_replace('?' . $this->queryString,
-                '',
-                $_SERVER['REQUEST_URI']);
+            '',
+            $_SERVER['REQUEST_URI']
+        );
 
         return $this;
     }
@@ -133,6 +141,32 @@ class Core {
     public function getQueryString() {
         return $this->queryString;
     }
+    
+    public function getQueryParamsString() {
+        return $this->queryParamsString;
+    }
+    
+    public function getQueryParams() {
+        return $this->queryParams;
+    }
+    
+    public function getQueryParam($param) {
+        return $this->queryParams[$param];
+    }
+    
+    public function issetQueryParam($param) {
+        return isset($this->queryParams[$param]);
+    }
+    
+    public function isEmptyQueryParam($param) {
+        return empty($this->queryParams[$param]);
+    }
+    
+    public function isNullQueryParam($param) {
+        return ($this->issetQueryParam($param)) ? 
+            ($this->queryParams[$param] === null) :
+            true;
+    }
 
     public function getQueryVars() {
         return $this->queryVars;
@@ -166,10 +200,10 @@ class Core {
         return $this->routeVariant;
     }
 
-    public function setRouteClass($routeClass)
+    public function setRouteClass($routeClass, $force = false)
     {
-        // Only set if it is empty
-        if (empty($this->routeClass)) {
+        // Only set if it is empty or we consciously did this.
+        if (empty($this->routeClass) || $force) {
             $this->routeClass = $routeClass;
         }
         return $this;
