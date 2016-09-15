@@ -1,6 +1,3 @@
-// Root path to assets.
-var ROOT = './';
-
 // Path to build compiled assets to.
 var DEST = './build/';
 
@@ -19,8 +16,8 @@ paths.clean = DEST;
  *
  * Source SASS files, output to `DEST` folder
  */
-var CSS = ROOT + 'css/';
-var SASS = ROOT + 'sass/';
+var CSS = 'css/';
+var SASS = 'sass/';
 
 paths.styles = {
   src:   SASS + 'main.scss',
@@ -38,7 +35,7 @@ paths.cssToSass = {
  *
  * Source JavaScript files, output minified to `DEST` folder
  */
-var JS = ROOT + 'js/';
+var JS = 'js/';
 var JS_EX = '!' + JS;
 
 paths.scripts = {
@@ -99,7 +96,7 @@ paths.scripts.src = paths.scripts.src.concat(exMainBundles);
  */
 paths.copy = {
   'copy-fonts': {
-    src:  ROOT + 'fonts/**/*',
+    src:  'fonts/**/*',
     dest: DEST + 'fonts'
   }
 };
@@ -110,7 +107,7 @@ paths.copy = {
  * Compress images and output to `build/images` folder.
  */
 paths.images = {
-  src:  ROOT + 'img/**/*',
+  src:  'img/**/*',
   dest: DEST + 'img'
 };
 
