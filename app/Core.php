@@ -51,7 +51,7 @@ class Core {
         $this->queryString = $_SERVER['QUERY_STRING'];
         $this->queryParamsString = file_get_contents('php://input');
         $this->queryParams = $this->util->getQueryVars(
-            null, 
+            null,
             $this->queryParamsString
         );
         $this->queryVars = $this->util->getQueryVars(
@@ -113,14 +113,15 @@ class Core {
     }
 
     protected function newRoute() {
-        
+
         try {
             if (!class_exists($this->routeClassPath)) {
                 throw new Exception();
             }
-            
+
             $this->routeAction = new $this->routeClassPath($this);
         } catch (Exception $e) {
+            var_dump($e);
             $this->util->triggerError(
                 array(
                     'success' => false,
@@ -129,7 +130,7 @@ class Core {
                 )
             );
         }
-        
+
         return $this;
     }
 
@@ -141,29 +142,29 @@ class Core {
     public function getQueryString() {
         return $this->queryString;
     }
-    
+
     public function getQueryParamsString() {
         return $this->queryParamsString;
     }
-    
+
     public function getQueryParams() {
         return $this->queryParams;
     }
-    
+
     public function getQueryParam($param) {
         return $this->queryParams[$param];
     }
-    
+
     public function issetQueryParam($param) {
         return isset($this->queryParams[$param]);
     }
-    
+
     public function isEmptyQueryParam($param) {
         return empty($this->queryParams[$param]);
     }
-    
+
     public function isNullQueryParam($param) {
-        return ($this->issetQueryParam($param)) ? 
+        return ($this->issetQueryParam($param)) ?
             ($this->queryParams[$param] === null) :
             true;
     }

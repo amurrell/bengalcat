@@ -12,7 +12,7 @@ Download repo
 cd DockerLocal
 sudo docker-compose up
 ```
-Go to [http://localhost:3000](http://localhost:3000)
+Go to [http://localhost:8080](http://localhost:8080)
 
 ## Install & Run - Not docker compose...
 
@@ -21,10 +21,10 @@ Download repo
 ```
 cd DockerLocal
 sudo docker build -t mysitename .
-sudo docker run -d -p 3000:80 -v `pwd | sed 's,/*[^/]\+/*$,,'`:/var/www/site mysitename
+sudo docker run -d -p 3000:8080 --net=host -v `pwd | sed 's,/*[^/]\+/*$,,'`:/var/www/site mysitename
 ```
 
-Go to [http://localhost:3000](http://localhost:3000)
+Go to [http://localhost:8080](http://localhost:8080)
 
 ---
 
@@ -117,7 +117,7 @@ and if it was not running:
 
 ## Install more packages, php libraries and so on
 
-Your Dockerfile can be edited to install more things if you need. 
+Your Dockerfile can be edited to install more things if you need.
 
 Add to dockerfile at least before CMD
 
@@ -129,7 +129,7 @@ RUN apt-get update && \
 
 ## Update your environmental variables
 
-Maybe you want to set the database environmental variables. 
+Maybe you want to set the database environmental variables.
 
 1. Edit the php7-fpm.site.conf to reflect these env var changes.
 2. Need to rebuild. Either `sudo docker-compose build` or `sudo docker build -t mysitename`

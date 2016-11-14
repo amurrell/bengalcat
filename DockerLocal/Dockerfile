@@ -4,7 +4,7 @@ FROM        ubuntu:16.04
 # File Author / Maintainer
 MAINTAINER Angela Murrell
 
-# Update the repository and install nginx and php7.0 
+# Update the repository and install nginx and php7.0
 RUN         apt-get update && \
             apt-get install -y nano && \
             apt-get install -y curl && \
@@ -13,8 +13,10 @@ RUN         apt-get update && \
             apt-get clean && \
             rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-RUN         apt-get update && \
-            apt-get install -y php-curl
+# Install more stuff
+RUN	apt-get update && \
+	apt-get install -y php-curl && \
+	apt-get install -y php-mysql
 
 # export var for nano to work in command line
 ENV TERM xterm
@@ -55,4 +57,4 @@ EXPOSE 80
 
 # Set the default command to execute when creating a new container
 # The following runs FPM and removes all its extraneous log output on top of what your app outputs to stdout
-CMD service php7.0-fpm start && service nginx start && /usr/sbin/php-fpm7.0 -F -O 2>&1 | sed -u 's,.*: \"\(.*\)$,\1,'| sed -u 's,"$,,' 1>&1 
+CMD service php7.0-fpm start && service nginx start && /usr/sbin/php-fpm7.0 -F -O 2>&1 | sed -u 's,.*: \"\(.*\)$,\1,'| sed -u 's,"$,,' 1>&1

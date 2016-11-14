@@ -31,6 +31,79 @@ class Util {
         echo '<pre>';print_r($var); echo '</pre>';
     }
 
+    static public function getHttpCodeWithCurl($url)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+
+        /* Get the HTML or whatever is linked in $url. */
+        $response = curl_exec($ch);
+
+        /* Check for 404 (file not found). */
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        return $httpCode;
+    }
+
+    static public function getHttpCodesWithCurl($urls, $options = array())
+    {
+        $curly = array();
+        $result = array();
+
+        $mh = curl_multi_init();
+
+        // loop through $data and create curl handles
+        // then add them to the multi-handle
+        foreach ($urls as $index => $url) {
+
+            $curly[$index] = curl_init();
+
+            $url = (is_array($url) && !empty($url['url'])) ? $url['url'] : $url;
+            curl_setopt($curly[$index], CURLOPT_URL, $url);
+            curl_setopt($curly[$index], CURLOPT_HEADER, 0);
+            curl_setopt($curly[$index], CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curly[$index], CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($curly[$index], CURLOPT_TIMEOUT, 5);
+
+            // post?
+            if (is_array($url)) {
+                if (!empty($url['post'])) {
+                    curl_setopt($curly[$index], CURLOPT_POST, 1);
+                    curl_setopt($curly[$index], CURLOPT_POSTFIELDS, $d['post']);
+                }
+            }
+
+            // extra options?
+            if (!empty($options)) {
+                curl_setopt_array($curly[$index], $options);
+            }
+
+            curl_multi_add_handle($mh, $curly[$index]);
+        }
+
+        // execute the handles
+        $running = null;
+        do {
+            curl_multi_exec($mh, $running);
+        } while ($running > 0);
+
+
+        // get content and remove handles
+        foreach ($curly as $index => $c) {
+            $result[$index] = $httpCode = curl_getinfo($c, CURLINFO_HTTP_CODE);
+            curl_multi_remove_handle($mh, $c);
+        }
+
+        // all done
+        curl_multi_close($mh);
+
+        return $result;
+    }
+
     /**
      * Make a curl call
      * @param string $url The url to call with curl
@@ -38,7 +111,7 @@ class Util {
      * @param bool $get If using get as the method, default false
      * @return mixed The response from the curl call
      */
-    static public function makeCurlCall($url, $params = array(), $get = false) {
+    static public function makeCurlCall($url, $params = array(), $get = false, $json = false) {
         // create a new cURL resource
         $ch = curl_init();
 
@@ -46,6 +119,9 @@ class Util {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        if ($json) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        }
 
         // Check for params
         if (!empty($params)) {
@@ -81,7 +157,7 @@ class Util {
 
     static public function trigger404($bc) {
         header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        $bc->setRouteClass('Error404', true);
+        $bc->setRouteClass('Error404');
         $error404page = new \Bc\App\Error404($bc);
         exit();
     }
@@ -118,6 +194,13 @@ class Util {
         }
 
         return $text;
+    }
+
+    static public function returnJsonResponse($data)
+    {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit();
     }
 
     static public function getTemplateContents($path, $data = null) {
