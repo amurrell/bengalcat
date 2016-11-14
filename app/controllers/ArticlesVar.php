@@ -1,6 +1,6 @@
 <?php
 
-namespace Bc\App\Classes;
+namespace Bc\App\Controllers;
 
 use Bc\App\Queries\ArticleDbQueries;
 

@@ -2,9 +2,9 @@
 
 namespace Bc\App\Queries;
 
-use Bc\App\DbClass;
+use Bc\App\DbExtender;
 
-class ArticleDbQueries extends DbClass {
+class ArticleDbQueries extends DbExtender {
 
     protected $db;
 

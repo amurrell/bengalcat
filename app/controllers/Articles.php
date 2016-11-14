@@ -1,12 +1,12 @@
 <?php
 
-namespace Bc\App\Classes;
+namespace Bc\App\Controllers;
 
 use Bc\App\Queries\ArticleDbQueries;
-use Bc\App\RouteClass;
+use Bc\App\RouteExtender;
 use Bc\App\Util;
 
-class Articles extends RouteClass {
+class Articles extends RouteExtender {
 
     protected $data;
     protected $articleQueries;

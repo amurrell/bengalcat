@@ -49,16 +49,16 @@ Go to [http://localhost:3000](http://localhost:3000)
 
 1. In `app\config\routes.php`, Change `Installed` to `Home` in the line with the root route
 
-- `'/' => '\Bc\App\Classes\Installed',` becomes `'/' => '\Bc\App\Classes\Home',`
+- `'/' => '\Bc\App\Controllers\Installed',` becomes `'/' => '\Bc\App\Controllers\Home',`
 
-1. Make `app/classes/Home.php` with following:
+1. Make `app/controllers/Home.php` with following:
 
     ```
     <?php
 
-    namespace Bc\App\Classes;
+    namespace Bc\App\Controllers;
 
-    class Home extends \Bc\App\RouteClass {
+    class Home extends \Bc\App\RouteExtender {
 
         protected function init()
         {
@@ -81,7 +81,7 @@ Cool notes:
 
 ### Front-end Fun - Gulp or not to Gulp
 
-The project defaults to using compiled css from sass and compiled JavaScript. 
+The project defaults to using compiled css from sass and compiled JavaScript.
 
 - The complied output folder is in version control: `html/assets/build/`
 - You can edit your `head.php` in the templates folder to use whatever css/js sources you want though.
@@ -106,12 +106,12 @@ The site is based on routes (many PHP frameworks do this ie Laravel, Symfony ...
     - The patterns are either **exact match** or they can have a regex pattern that must have a capturing group using `()`
         - `/articles/([^/]*)/` - This pattern will match any number of characters between two /s but cannot match a /
             - This would be useful for something like /articles/an-amazing-article/ where `an-amazing-article` will be the variant you can use in your controller.
-        
 
 
-#### Route Classes (found in `app/classes/`) extend abstract RouteClass
 
-An abstract class `RouteClass` implements some functions useful for your route classes to inherit, like render.
+#### Route Controllers (found in `app/controllers/`) extend abstract RouteExtender
+
+An abstract class `RouteExtender` implements some functions useful for your route controllers to inherit, like render.
 
 But,
 
@@ -120,23 +120,23 @@ But,
 
 #### Abstract function init() - The most important method!
 
-An abstract class can also require that classes extending it **must** 
+An abstract class can also require that classes extending it **must**
 implement any abstract method described in it's class declaration.
 
-So that means classes extending RouteClass must have a method `init()`.
+So that means classes extending RouteExtender must have a method `init()`.
 
 - The `init()` method can most easily simply `$this->render($PATH_TO_TEMPLATE);`
 - But! You can do a few other things...
-    1. You can setHead, setHeader, setFooter to different templates other than the defaults in the `abstract RouteClass`
+    1. You can setHead, setHeader, setFooter to different templates other than the defaults in the `abstract RouteExtender`
     2. Or you can call any other custom methods you write to determine logic, grab data from the database and choose to return that without calling render.
     3. Or you can do the above, but also write your own render method to return perhaps a json encoded array.
 
     ```
     <?php
 
-        namespace Bc\App\Classes;
+        namespace Bc\App\Controllers;
 
-        class Articles extends \Bc\App\RouteClass {
+        class Articles extends \Bc\App\RouteExtender {
 
             protected function init()
             {
@@ -152,7 +152,7 @@ So that means classes extending RouteClass must have a method `init()`.
 
 A few other useful methods on the Route Class are worth mentioning:
 
-- **getVariant()** - Returns the variant from the request in a route like `'/articles/([^/]*)/' => '\Bc\App\Classes\ArticlesVar'`
+- **getVariant()** - Returns the variant from the request in a route like `'/articles/([^/]*)/' => '\Bc\App\Controllers\ArticlesVar'`
     - ex. /articles/**an-amazing-article**/
 - **getMethod()** - Returns the Request Method ie GET, POST, PATCH, DELETE, PUT
 - **getQueryVars()** - Returns an array of all the query string, var => value
@@ -162,13 +162,13 @@ A few other useful methods on the Route Class are worth mentioning:
 
 ### More Explanations
 
-For the people who REALLY like reading. 
+For the people who REALLY like reading.
 
 ** Note ** ALL directory path's (referred to in the dir constants below) include your `your/projectroot/` in them!
 
 #### Index.php hardly does much, but so important.
 
-index.php autoloads all your classes, but only classes in `app` and `app/classes`. This is really the only place classes should go.
+index.php autoloads all your classes, but only classes in `app` and `app/DIRs`. This is really the only place classes should go.
 
 - **APP_DIR** constant is defined in index.php, too. Points to the path of the `app/` directory.
 
@@ -180,7 +180,7 @@ The `Bc` (BengalCat) class makes up the core by determining the correct route fo
 
 - The core loads a few constants
     - **INDEX_DIR** constant which points to `html/` folder (where index.php is..)
-    - **CLASSES_DIR** constant which points to `app/classes/`
+    - **CONTROLLERS_DIR** constant which points to `app/controllers/`
     - **SRC_DIR** constant which points to `html/src/`
     - **ASSETS_DIR** constant which points to `html/assets/`
 
@@ -194,7 +194,7 @@ The `Bc` (BengalCat) class makes up the core by determining the correct route fo
         - **trigger404()** - call this whenever you need to 404, it will throw the error, include the 404 page and exit.
             - You should design the 404.php page in `html/src/`
         - **triggerError()** - pass an array like:
-            
+
     ```
     array(
         'success' => false,

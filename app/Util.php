@@ -157,7 +157,7 @@ class Util {
 
     static public function trigger404($bc) {
         header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-        $bc->setRouteClass('Error404');
+        $bc->setRouteExtender('Error404');
         $error404page = new \Bc\App\Error404($bc);
         exit();
     }

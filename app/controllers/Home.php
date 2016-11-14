@@ -1,8 +1,8 @@
 <?php
 
-namespace Bc\App\Classes;
+namespace Bc\App\Controllers;
 
-class Home extends \Bc\App\RouteClass {
+class Home extends \Bc\App\RouteExtender {
 
     protected function init()
     {

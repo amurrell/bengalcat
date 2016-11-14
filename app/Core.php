@@ -17,8 +17,8 @@ class Core {
     private $method;
     private $routes;
     private $route;
-    private $routeClass;
-    private $routeClassPath;
+    private $routeExtender;
+    private $routeExtenderPath;
     private $routeAction;
     private $routeVariant;
 
@@ -27,7 +27,7 @@ class Core {
         $this->dir = $dir;
 
         define('INDEX_DIR', $dir . '/');
-        define('CLASSES_DIR', $dir . '/classes/');
+        define('CONTROLLERS_DIR', $dir . '/controllers/');
         define('SRC_DIR', $dir . '/src/');
         define('ASSETS_DIR', $dir . '/assets/');
 
@@ -91,7 +91,7 @@ class Core {
                 $matches = array();
                 if (preg_match('#^'. $configuredRoute . '$#', $this->route, $matches)) {
                     $this->routeVariant = $matches[1];
-                    $this->routeClassPath = $configuredClass;
+                    $this->routeExtenderPath = $configuredClass;
                     break;
                 }
             }
@@ -99,14 +99,14 @@ class Core {
 
         // Matches exact routes
         if (isset($this->routes[$this->route])) {
-            $this->routeClassPath = $this->routes[$this->route];
+            $this->routeExtenderPath = $this->routes[$this->route];
         }
 
-        if (empty($this->routeClassPath)) {
+        if (empty($this->routeExtenderPath)) {
             $this->util->trigger404($this);
         }
         else {
-            $this->routeClass = $this->util->getClassName($this->routeClassPath);
+            $this->routeExtender = $this->util->getClassName($this->routeExtenderPath);
         }
 
         return $this;
@@ -115,11 +115,11 @@ class Core {
     protected function newRoute() {
 
         try {
-            if (!class_exists($this->routeClassPath)) {
+            if (!class_exists($this->routeExtenderPath)) {
                 throw new Exception();
             }
 
-            $this->routeAction = new $this->routeClassPath($this);
+            $this->routeAction = new $this->routeExtenderPath($this);
         } catch (Exception $e) {
             var_dump($e);
             $this->util->triggerError(
@@ -185,12 +185,12 @@ class Core {
         return $this->route;
     }
 
-    public function getRouteClass() {
-        return $this->routeClass;
+    public function getRouteExtender() {
+        return $this->routeExtender;
     }
 
-    public function getRouteClassPath() {
-        return $this->routeClassPath;
+    public function getRouteExtenderPath() {
+        return $this->routeExtenderPath;
     }
 
     public function getRouteAction() {
@@ -201,11 +201,11 @@ class Core {
         return $this->routeVariant;
     }
 
-    public function setRouteClass($routeClass, $force = false)
+    public function setRouteExtender($routeExtender, $force = false)
     {
         // Only set if it is empty or we consciously did this.
-        if (empty($this->routeClass) || $force) {
-            $this->routeClass = $routeClass;
+        if (empty($this->routeExtender) || $force) {
+            $this->routeExtender = $routeExtender;
         }
         return $this;
     }

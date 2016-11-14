@@ -1,12 +1,12 @@
 <?php
 
-namespace Bc\App\Classes;
+namespace Bc\App\Controllers;
 
-class Docs extends \Bc\App\RouteClass {
-    
+class Docs extends \Bc\App\RouteExtender {
+
     protected function init()
     {
-        
+
         Util::trigger404($this->bc);
     }
 }

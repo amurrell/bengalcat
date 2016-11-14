@@ -2,7 +2,7 @@
 
 namespace Bc\App;
 
-abstract class DbClass {
+abstract class DbExtender {
 
     protected $connections;
     protected $db;

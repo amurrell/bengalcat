@@ -2,7 +2,7 @@
 
 namespace Bc\App;
 
-abstract class RouteClass {
+abstract class RouteExtender {
 
     protected $head;
     protected $header;
@@ -35,13 +35,13 @@ abstract class RouteClass {
     }
 
     /**
-     * Need to customize the process of each routeClass with a init
+     * Need to customize the process of each routeExtender with a init
      */
     abstract protected function init();
 
     protected function render($renderPath, $data = null, $tokens = array())
     {
-        $tokens['[bc:routeClass]'] = $this->bc->getRouteClass();
+        $tokens['[bc:routeExtender]'] = $this->bc->getRouteExtender();
 
         // Begin output buffering for render include
         $renderData = $this->bc->util->getTemplateContents($renderPath, $data);

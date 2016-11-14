@@ -32,7 +32,7 @@ protected function init()
     <h4>Here's an example of setting your own template parts for head, header, footer - from the <strong>Articles.php</strong> class:</h4>
 
 <pre>
-class Articles extends \Bc\App\RouteClass {
+class Articles extends \Bc\App\RouteExtender {
 
     protected function init()
     {

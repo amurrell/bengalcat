@@ -1,9 +1,9 @@
 <?php
 
-namespace Bc\App\Classes;
+namespace Bc\App\Controllers;
 
-class Installed extends \Bc\App\RouteClass {
-    
+class Installed extends \Bc\App\RouteExtender {
+
     protected function init()
     {
         $this->render(SRC_DIR . 'installed.php');
