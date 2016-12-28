@@ -41,7 +41,7 @@ TRUNCATE TABLE `articles`;
 --
 
 INSERT INTO `articles` (`id`, `slug`, `title`, `content`) VALUES
-(1, 'example-article', 'Example Article Title', 'Example article content. Change 1.');
+(1, 'example-article', 'Example Article Title', 'Example article content.');
 
 INSERT INTO `articles` (`id`, `slug`, `title`, `content`) VALUES
 (2, 'example-article-2', 'Example Article Title 2', 'Example article content 2.');
