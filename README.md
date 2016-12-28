@@ -36,7 +36,7 @@ cd DockerLocal
 sudo docker-compose up
 ```
 
-Go to [http://localhost:3000](http://localhost:3000)
+Go to [http://localhost:8080](http://localhost:8080)
 
 - Or read the full [INSTALL.md](https://github.com/amurrell/bengalcat/blob/master/INSTALL.md) which explains basic docker commands, advanced manipulation of our dockerfile and how to use npm for assets.
 
