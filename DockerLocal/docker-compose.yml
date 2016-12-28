@@ -1,7 +1,19 @@
 web:
     build: .
     ports:
-        - "3000:8080"
-    net: "host"
+        - "8080:8080"
     volumes:
         - ../:/var/www/site
+    links:
+        - mysql
+    expose:
+        - "8080"
+
+mysql:
+    image: mysql
+    ports:
+        - "3307:3306"
+    environment:
+        MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+        - ./data/dumps:/docker-entrypoint-initdb.d

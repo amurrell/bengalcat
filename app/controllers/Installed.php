@@ -2,11 +2,27 @@
 
 namespace Bc\App\Controllers;
 
-class Installed extends \Bc\App\RouteExtender {
+use Bc\App\RouteExtenders\ExtendedRouteExtender;
+
+class Installed extends ExtendedRouteExtender {
 
     protected function init()
     {
-        $this->render(SRC_DIR . 'installed.php');
+
+        $this->nav->addTempItem(
+            'test_menu_add_item',
+            [
+                'href' => '/articles/',
+            ],
+            'list', // icon
+            'Test Menu Item',
+            '/articles/',
+            'about' // Put this item after 'about' (look at Utils\NavUtils)
+        );
+
+        $this->render(SRC_DIR . 'installed.php', null, [
+            '[bc:nav]' => $this->nav->getNav(true)
+        ] );
     }
 }
 

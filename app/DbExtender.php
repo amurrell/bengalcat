@@ -13,10 +13,11 @@ abstract class DbExtender {
         $db = $this->getDbConnectionData($dbName);
 
         $this->db = new Db(
-            $dbName,
+            !empty($db->name) ? $db->name : $dbName,
             $db->user,
             $db->pass,
-            $db->host
+            $db->host,
+            $db->port
         );
     }
 

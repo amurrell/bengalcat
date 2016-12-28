@@ -54,7 +54,8 @@ body {
 a {
   color: #de454a; }
   a:hover {
-    color: #d98d45; }
+    color: #d98d45;
+    text-decoration: none; }
 
 p {
   font-size: 1.3em;

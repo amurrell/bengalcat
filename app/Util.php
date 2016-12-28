@@ -88,7 +88,7 @@ class Util {
         // execute the handles
         $running = null;
         do {
-            curl_multi_exec($mh, $running);
+          curl_multi_exec($mh, $running);
         } while ($running > 0);
 
 
@@ -209,7 +209,7 @@ class Util {
             self::triggerError(array(
                 'success' => false,
                 'error_code' => 424,
-                'message' => 'Missing/Incorrect Template File'
+                'message' => 'Missing/Incorrect Template File: ' . $path
             ));
         }
 
@@ -223,6 +223,108 @@ class Util {
         $path = ASSETS_DIR . 'build/img/' . $imageName;
         $relative = str_replace(INDEX_DIR, '/', $path);
         return file_exists($path) ? $relative : '';
+    }
+
+    static public function getPageRangeShowingOnPage(
+        $pageNum,
+        $perPage,
+        $totalItemsNum
+    ) {
+        $pageHighMax = $pageNum * $perPage;
+        $high = ($pageHighMax > $totalItemsNum) ? $totalItemsNum : $pageHighMax;
+        $low = $pageHighMax - ($perPage - 1);
+        return "$low - $high";
+    }
+
+    static public function getBasePath()
+    {
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+            ? 'https'
+            : 'http';
+
+        $domain = $protocol . '://' . $_SERVER['HTTP_HOST'];
+
+        return "$domain";
+    }
+
+    static public function getNewPath($addPath)
+    {
+        $base = self::getBasePath();
+
+        return "{$base}{$addPath}";
+    }
+
+    static public function redirect($fullPath)
+    {
+        header('Location: ' . $fullPath);
+        exit();
+    }
+
+    static public function redirectShortPath($path)
+    {
+        header('Location: ' . self::getNewPath($path));
+        exit();
+    }
+
+    static public function stringBool($value)
+    {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    static public function mergeArrayofArrays($array, $property = null)
+    {
+        return array_reduce(
+            (array) $array, // make sure this is an array too, or array_reduce is mad.
+            function($carry, $item) use ($property) {
+
+                $mergeOnProperty = (!$property) ?
+                        $item :
+                        (is_array($item) ? $item[$property] : $item->$property);
+
+                return is_array($mergeOnProperty)
+                    ? array_merge($carry, $mergeOnProperty)
+                    : $carry;
+        }, array()); // start the carry with empty array
+    }
+
+    static public function insertInArrayAfterKey($insertArr, $searchkey, $haystackArr)
+    {
+        $newArr = [];
+        $assoc = is_numeric($searchkey);
+
+        $haystackArr = ($assoc)
+                ? $haystackArr
+                : array_values($haystackArr);
+
+        foreach ($haystackArr as $key => $value) {
+
+            $newArr[$key] = $value;
+
+            if ($key == $searchkey) {
+                $newArr = array_merge($newArr, $insertArr);
+            }
+        }
+        return ($assoc) ? $newArr : array_values($newArr);
+    }
+
+    static public function insertInArrayBeforeKey($insertArr, $searchkey, $haystackArr)
+    {
+        $newArr = [];
+        $assoc = is_numeric($searchkey);
+
+        $haystackArr = ($assoc)
+                ? $haystackArr
+                : array_values($haystackArr);
+
+        foreach ($haystackArr as $key => $value) {
+
+            if ($key == $searchkey) {
+                $newArr = array_merge($newArr, $insertArr);
+            }
+
+            $newArr[$key] = $value;
+        }
+        return ($assoc) ? $newArr : array_values($newArr);
     }
 
 }

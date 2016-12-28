@@ -1,9 +1,13 @@
 <?php
 
 return [
-    'database_name' => [
+    // This is relative to your web container, not your host machine
+    // host machine `mysql -u root -p1234 example_data --port=3307 -h 127.0.0.1`
+    'example_data' => [
         'user' => 'root',
-        'pass' => 'password',
-        'host' => '127.0.0.1'
+        'pass' => '1234',
+        'name' => 'example_data',
+        'host' => 'dockerlocal_mysql_1',
+        'port' => '3306'
     ]
 ];

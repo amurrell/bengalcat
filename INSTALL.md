@@ -14,17 +14,31 @@ sudo docker-compose up
 ```
 Go to [http://localhost:8080](http://localhost:8080)
 
-## Install & Run - Not docker compose...
+---
 
-Download repo
+## Import your own sql file
+
+In `DockerLocal\data\dumps` put a dump.sql file in this folder
+(include the creation of the database) in the dump file, and you will be able to connect to it.
+
+Look at the `app/config/connections.php` for an example (basically just create another entry with your database name.
+
+Remember to `sudo docker-compose down` so that next time you `up` it will re-import dump files.
+
+Also, if you made changes to your database and want to keep them after removing
+(down) your container, you may want to export your database.
+Access in the command line is shown below.
+
+## Access database from host machine command line
+
+If you are running a local mysql server on port 3307 for some reason, you'd need to stop that server.
 
 ```
-cd DockerLocal
-sudo docker build -t mysitename .
-sudo docker run -d -p 3000:8080 --net=host -v `pwd | sed 's,/*[^/]\+/*$,,'`:/var/www/site mysitename
+# mysql -u USER -pPASSWORD DB_NAME --port=PORT -h IP
+mysql -u root -p1234 example_data --port=3307 -h 127.0.0.1
 ```
 
-Go to [http://localhost:8080](http://localhost:8080)
+You can use these credentials with other mysql client guis you might have.
 
 ---
 

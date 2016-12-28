@@ -2,31 +2,35 @@
 
 namespace Bc\App\Controllers;
 
-use Bc\App\Queries\ArticleDbQueries;
-use Bc\App\RouteExtender;
+use Bc\App\RouteExtenders\SiteRouteExtender;
 use Bc\App\Util;
 
-class Articles extends RouteExtender {
-
-    protected $data;
-    protected $articleQueries;
+class Articles extends SiteRouteExtender {
 
     protected function init()
     {
-        $this->articleQueries = new ArticleDbQueries('database_name');
-        $this->findArticles();
+        $this->addQuery(
+            'articles',
+            'articleQueries',
+            'selectAll'
+        );
 
-        $this->render(SRC_DIR . 'main/articles.php', $this->data, array('[bc:slogan]' => 'Articles are cool.'));
+        $this->prepareData();
+        $this->prepareTokens();
+        $this->render(SRC_DIR . 'main/articles.php', $this->data, $this->tokens);
     }
 
-    protected function findArticles()
+    protected function prepareTokens()
     {
-        $this->data = $this->articleQueries->selectAll();
+        $this->tokens = [
+            '[bc:slogan]' => 'Testing Articles',
+            '[bc:articles list]' => Util::getTemplateContents(
+                SRC_DIR . 'tokenHTML/articles-list.php',
+                $this->data
+            ),
+            '[bc:base link]' => '/articles/',
+        ];
 
-        // If no article found, 404.
-        if (empty($this->data)) {
-            Util::trigger404($this->bc);
-        }
+        return $this;
     }
 }
-

@@ -10,9 +10,9 @@ class Core {
     public $util;
 
     private $dir;
+    private $queryString;
     private $queryParams;
     private $queryParamsString;
-    private $queryString;
     private $queryVars;
     private $method;
     private $routes;
@@ -21,6 +21,8 @@ class Core {
     private $routeExtenderPath;
     private $routeAction;
     private $routeVariant;
+    private $routeVariants;
+    private $settings;
 
     public function __construct($dir)
     {
@@ -32,6 +34,7 @@ class Core {
         define('ASSETS_DIR', $dir . '/assets/');
 
         $this->loadUtil()
+             ->loadSettings()
              ->parseUrl()
              ->redirectRoute()
              ->findRoute()
@@ -41,6 +44,24 @@ class Core {
     protected function loadUtil()
     {
         $this->util = new Util;
+
+        return $this;
+    }
+
+    protected function loadSettings()
+    {
+        $defaultSettings = [];
+        $settings = [];
+
+        if (file_exists(APP_DIR . 'config/settingsDefaults.php')) {
+            $defaultSettings = include_once APP_DIR . 'config/settingsDefaults.php';
+        }
+
+        if (file_exists(APP_DIR . 'config/settings.php')) {
+            $settings = include_once APP_DIR . 'config/settings.php';
+        }
+
+        $this->settings = (object) array_merge($defaultSettings, $settings);
 
         return $this;
     }
@@ -201,6 +222,10 @@ class Core {
         return $this->routeVariant;
     }
 
+    public function getRouteVariants() {
+        return $this->routeVariants;
+    }
+
     public function setRouteExtender($routeExtender, $force = false)
     {
         // Only set if it is empty or we consciously did this.
@@ -208,6 +233,26 @@ class Core {
             $this->routeExtender = $routeExtender;
         }
         return $this;
+    }
+
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    public function getSetting($prop, $default = null)
+    {
+        if (!isset($this->settings->$prop)) {
+
+            // try get_env first
+            if (!empty(getenv($prop))) {
+                return getenv($prop);
+            }
+
+            return $default;
+        }
+
+        return $this->settings->$prop;
     }
 }
 

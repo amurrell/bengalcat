@@ -2,7 +2,9 @@
 
 namespace Bc\App\Controllers;
 
-class About extends \Bc\App\RouteExtender {
+use Bc\App\RouteExtenders\ExtendedRouteExtender;
+
+class About extends ExtendedRouteExtender {
 
     protected function init()
     {

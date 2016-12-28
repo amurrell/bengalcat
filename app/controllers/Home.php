@@ -2,12 +2,15 @@
 
 namespace Bc\App\Controllers;
 
-class Home extends \Bc\App\RouteExtender {
+use Bc\App\RouteExtenders\ExtendedRouteExtender;
+use Bc\App\Util;
+
+class Home extends ExtendedRouteExtender {
 
     protected function init()
     {
 
-        $slogan = \Bc\App\Util::getTemplateContents(SRC_DIR . 'tokenHTML/slogan-home.php');
+        $slogan = Util::getTemplateContents(SRC_DIR . 'tokenHTML/slogan-home.php');
 
         $this->render(SRC_DIR . 'main/home.php', null,
                 array('[bc:slogan]' => $slogan));

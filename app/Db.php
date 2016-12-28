@@ -19,6 +19,7 @@ class Db {
     private $user;
     private $password;
     private $host;
+    private $port;
     private $charset;
 
     /**
@@ -29,6 +30,7 @@ class Db {
             $user,
             $password,
             $host = 'localhost',
+            $port = '3306',
             $charset = 'utf8mb4'
         ) {
 
@@ -36,6 +38,7 @@ class Db {
         $this->user = $user;
         $this->password = $password;
         $this->host = $host;
+        $this->port = is_null($port) ? '3306' : $port;
         $this->charset = $charset;
 
         return $this;
@@ -43,7 +46,7 @@ class Db {
 
     protected function openConn()
     {
-        $dbString = "mysql:host={$this->host};"
+        $dbString = "mysql:host={$this->host};port={$this->port};"
         . "dbname={$this->dbname};"
         . "charset={$this->charset}";
 
@@ -65,7 +68,7 @@ class Db {
 
     /**
      * Close db connection
-     * @return Db
+     * @return \Bc\App\Db
      */
     public function closeConn()
     {
@@ -107,11 +110,59 @@ class Db {
         $this->querySelect($string, $params, null, null);
     }
 
+    public function queryDelete(
+            $string,
+            $params = array()
+        ) {
+        $this->querySelect($string, $params, null, null);
+    }
+
     public function queryUpdate(
             $string,
             $params = array()
         ) {
         $this->querySelect($string, $params, null, null);
+    }
+
+    protected function bindParamsByType(&$q, &$params)
+    {
+        if (is_array($params) && !empty($params)) {
+            foreach ($params as $key => $value) {
+                $bind = false;
+
+                if (is_int($value)) {
+                    $q->bindValue($key, intval($value), PDO::PARAM_INT);
+                    $bind = true;
+                }
+                else if (is_float($value) || is_string($value)) {
+                    $q->bindValue($key, strval($value), PDO::PARAM_STR);
+                    $bind = true;
+                }
+                else if (is_null($value)) {
+                    $q->bindValue($key, $value, PDO::PARAM_NULL);
+                    $bind = true;
+                }
+                else if (is_bool($value)) {
+                    $q->bindValue($key, boolval($value), PDO::PARAM_BOOL);
+                    $bind = true;
+                }
+
+                if ($bind) {
+                    unset($params[$key]);
+                }
+            }
+        }
+    }
+
+    protected function handleParamsAndExecute($q, $params)
+    {
+        $this->bindParamsByType($q, $params);
+
+        if (empty($params)) {
+            $q->execute();
+        } else {
+            $q->execute($params);
+        }
     }
 
     public function querySelect(
@@ -133,7 +184,7 @@ class Db {
             }
             else {
                 $q = $this->db->prepare($string);
-                $q->execute($params);
+                $this->handleParamsAndExecute($q, $params);
             }
 
             // If not empty statement method, apply it.
@@ -166,7 +217,9 @@ class Db {
             Util::triggerError(array(
                'success' => false,
                'error_code' => (int) $e->getCode(),
-               'message' => $e->getMessage()
+               'message' => $e->getMessage(),
+               'query' => $string,
+               'params' => $params
             ));
         }
     }

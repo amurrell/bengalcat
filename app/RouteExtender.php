@@ -8,16 +8,29 @@ abstract class RouteExtender {
     protected $header;
     protected $footer;
     protected $variant;
+    protected $variants;
     protected $queryVars;
     protected $method;
+    protected $nav;
 
-    public function __construct(\Bc\App\Core $bc)
+    public function __construct(Core $bc)
     {
         $this->bc = $bc;
 
         $this->variant = $this->bc->getRouteVariant();
+        $this->variants = empty($this->bc->getRouteVariants()) ?
+            [] :
+            array_filter(
+                $this->bc->getRouteVariants(),
+                function($variant){
+                    return strlen($variant);
+                }
+            );
         $this->queryVars = $this->bc->getQueryVars();
         $this->method = $this->bc->getMethod();
+
+        // Entry point for custom methods
+        $this->customMethods();
 
         // Setup some templates
 
@@ -32,6 +45,10 @@ abstract class RouteExtender {
         $this->init();
 
         return $this;
+    }
+
+    protected function customMethods() {
+
     }
 
     /**
@@ -127,6 +144,40 @@ abstract class RouteExtender {
 
     public function getVariant() {
         return $this->variant;
+    }
+
+    public function getVariants($num = null) {
+
+        if ($num !== null) {
+            return (!isset($this->variants[$num - 1]))
+                ? null
+                : $this->variants[$num - 1];
+        }
+
+        return $this->variants;
+    }
+
+    public function variantMatchValueExists($matchValue)
+    {
+        return array_reduce($this->variants, function($carry, $item) use ($matchValue) {
+            if ($item == $matchValue) {
+                return true;
+            }
+            return $carry;
+        }, false);
+    }
+
+    public function getVariantMatchAfterMatchValue($matchValue)
+    {
+        return array_reduce($this->variants, function($carry, $item) use ($matchValue) {
+            if ($item == $matchValue) {
+                return true;
+            }
+            if ($carry === true) {
+                return $item;
+            }
+            return $carry;
+        }, null);
     }
 
     public function getQueryVars() {

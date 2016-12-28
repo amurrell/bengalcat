@@ -12,17 +12,7 @@
                         </a>
                     </div>
                     <div class="menu col-xs-9">
-                        <ul>
-                            <li>
-                                <a href="https://github.com/amurrell/bengalcat/blob/master/README.md">Docs</a>
-                            </li>
-                            <li>
-                                <a href="/about/">About</a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/amurrell/bengalcat/">Download</a>
-                            </li>
-                        </ul>
+                        [bc:nav]
                     </div>
                 </div>
             </nav>

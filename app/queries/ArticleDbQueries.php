@@ -15,12 +15,19 @@ class ArticleDbQueries extends DbExtender {
         );
     }
 
-    public function selectArticleByName($articleName)
+    public function selectArticleByName($data)
     {
         return $this->db->querySelect(
-            "select * from articles where name = :article_name;", [
-                'article_name' => $articleName,
-            ]
+            "select * from articles where title = :article_title;",
+            $data
+        );
+    }
+
+    public function selectArticleById($data)
+    {
+        return $this->db->querySelect(
+            "select * from articles where id = :article_id;",
+            $data
         );
     }
 }
