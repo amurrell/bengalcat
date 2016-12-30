@@ -7,7 +7,7 @@ return [
         'user' => 'root',
         'pass' => '1234',
         'name' => 'example_data',
-        'host' => 'dockerlocal_mysql_1',
+        'host' => 'mysql',
         'port' => '3306'
     ]
 ];

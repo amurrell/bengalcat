@@ -17,3 +17,4 @@ mysql:
         MYSQL_ROOT_PASSWORD: 1234
     volumes:
         - ./data/dumps:/docker-entrypoint-initdb.d
+        - ./data/custom:/etc/mysql/conf.d
