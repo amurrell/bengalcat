@@ -16,6 +16,9 @@ function alwaysWatch() {
 
   // Watch Gulp files
   gulp.watch(paths.jshint.gulp, ['jshint-gulp']);
+
+  // Watch image files
+  gulp.watch(paths.images.src, ['images']);
 }
 
 // Watch Development
