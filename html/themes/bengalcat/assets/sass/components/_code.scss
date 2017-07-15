@@ -1,0 +1,66 @@
+pre.codebox {
+    margin: 20px auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: $brown-grey;
+    color: $gold;
+    counter-reset: line;
+    font-size: 0;
+    
+    &:before {
+        content: "📁 " attr(data-title);
+        width: 100%;
+        background: $gold;
+        padding: 7px 5px 5px 15px;
+        color: rgba($brown, .5);
+        font-size: 16px;
+        display: block;
+        
+        &:empty {
+            display: none;
+        }
+    }
+    
+    code {
+        counter-increment: line;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: block;
+        margin: 0;
+        font-size: 16px;
+        position: relative;
+        min-height: 33px;
+        padding: 7px 4px 4px 4px;
+        padding-left: 40px;
+        
+        &:before {
+            content: counter(line);
+            -webkit-user-select: none;
+            margin-right: 10px;
+            text-align: right;
+            width: 35px;
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0px;
+            background: darken($brown-grey, 5%);
+            padding: 0 7px;
+            line-height: 33px;
+            color: $gold;
+            color: rgba($gold, .7);
+        }
+    }
+}
+
+code {
+    background: $brown-lightest;
+    color: $brown;
+    border-radius: 2px;
+    padding: 3px 5px;
+    margin: 1px 4px;
+}
+
+pre {
+    text-align: left;
+}

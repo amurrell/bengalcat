@@ -1,0 +1,2 @@
+<!--<script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>-->
+<script type="text/javascript" src="<?= Bc\App\Core\Util::getAsset(JS_DIR, 'jquery-ui.min.js'); ?>"></script>

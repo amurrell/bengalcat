@@ -1,0 +1,1 @@
+app.codebox={init:function(t){this.box=t;var e=this.box.text().split("\n"),o=this.getCode(e);this.box.html(o)},getCode:function(t){if(t.length){for(var e=$("<pre></pre>"),o=0;o<t.length;o++){var n=t[o].length?t[o]:"<br>";e.append("<code>"+n+"</code>")}return e.html()}}};

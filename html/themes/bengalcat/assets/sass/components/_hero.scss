@@ -1,0 +1,66 @@
+.full-width-hero {
+    background: $brown-red;
+    background-image: radial-gradient(800px at center 300px , $gold 0px, #551100 100%);
+    min-height: 500px;
+    height: 35vh;
+    position: relative;
+    z-index: 5;
+    margin-bottom: 50px;
+
+    &:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	bottom: 0;
+	background-color: $brown-red;
+	background: url('../img/bg-pattern.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+	opacity: .4;
+	z-index: -1;
+    }
+
+    .hero-text {
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	font-size: 2.3em;
+	text-align:center;
+	color: #fff;
+	z-index: 10;
+	width: auto;
+	padding: 0 20px;
+        font-family: $font-purisa;
+
+	.sub-hero-text {
+	    font-size: 18px;
+	    text-transform: uppercase;
+	    color: $brown-red;
+	}
+    }
+
+    .text-highlight {
+	color: $brown-red;
+    }
+
+    .text-highlight-wrapper {
+	padding-bottom: 4px;
+	margin: 0 10px;
+	border-bottom: 3px solid $brown-red;
+	font-size: 25px;
+
+	a {
+	    width: 300px;
+	    display: inline-block;
+	}
+
+	@include bp(md) {
+	    font-size: 40px;
+	    width: 500px;
+	}
+    }
+
+}

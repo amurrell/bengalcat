@@ -1,0 +1,1 @@
+app.showbyhash={init:function(h){this.el=h,window.location.hash===h.attr("data-hash")&&h.show()}};

@@ -1,0 +1,1 @@
+<script type="text/javascript" src="<?= Bc\App\Core\Util::getAsset(JS_DIR, 'main.bundle.js'); ?>"></script>

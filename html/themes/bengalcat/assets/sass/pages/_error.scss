@@ -1,0 +1,29 @@
+body.Error {
+    
+    .full-width-hero {
+        height: 100vh;
+        margin: 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+    
+    footer {
+        margin: 0;
+        z-index: 10;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        
+        .footer-bar {
+            background: $brown-red;
+            color: #fff;
+        }
+        
+        .top {
+            display: none;
+        }
+    }
+    
+}

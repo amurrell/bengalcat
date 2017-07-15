@@ -2,57 +2,46 @@
 
 namespace Bc\App\Utils;
 
-use Bc\App\Util;
-use Exception;
+use Bc\App\Core\Core;
+use Bc\App\Core\Util;
 
 class NavUtil {
 
-    const activeClass = 'ia-active';
-
+    protected $bc;
+    protected $addItemsLast = true;
     protected $nav;
+    protected $navRenderPath;
+    protected $navActiveClass;
+    
     public $items;
+    public $addItems = [];
 
-    public function __construct()
+
+    public function __construct(Core $bc, $items, $navRenderPath, $navActiveClass)
     {
-        $this->items = [
-            'docs' => [
-                'attributes' => [
-                    'href' => 'https://github.com/amurrell/bengalcat/blob/master/README.md',
-                ],
-                'fontawesomeIcon' => 'copy',
-                'display' => 'Docs',
-            ],
-            'about' => [
-                'attributes' => [
-                    'href' => '/about/',
-                ],
-                'fontawesomeIcon' => 'question',
-                'display' => 'About',
-                'matchingRoutePath' => '/about/'
-            ],
-            'download' => [
-                'attributes' => [
-                    'href' => 'https://github.com/amurrell/bengalcat/',
-                ],
-                'fontawesomeIcon' => 'download',
-                'display' => 'Download',
-            ],
-        ];
+        $this->bc = $bc;
+        $this->items = Util::arrayifyObject($items);
+        $this->navRenderPath = $navRenderPath;
+        $this->$navActiveClass = $navActiveClass;
     }
 
     protected function navStructure($returnKeys = [], $excludeKeys = [])
     {
+        $finalItems = ($this->addItemsLast)
+                ? array_merge($this->items, $this->addItems)
+                : array_merge($this->addItems, $this->items);
+
         if (!empty($returnKeys)) {
-            $keep = array_intersect_key($this->items, array_flip($returnKeys));
+            $keep = array_intersect_key($finalItems, array_flip($returnKeys));
             $sorted = array_replace(array_flip($returnKeys), $keep);
             return $sorted;
         }
 
         if (!empty($excludeKeys)) {
-            return array_diff_key($this->items, array_flip($excludeKeys));
+            return array_diff_key($finalItems, array_flip($excludeKeys));
         }
 
-        return $this->items;
+        return $finalItems;
     }
 
     /**
@@ -69,7 +58,7 @@ class NavUtil {
     public function addTempItem($name, $attributes, $icon, $display, $routePath, $after = '', $before = '') {
         $item = [
             $name => [
-                'attributes' => array_merge(['class' => 'ia-button'], $attributes),
+                'attributes' => array_merge(['class' => 'te-nav'], $attributes),
                 'fontawesomeIcon' => $icon,
                 'display' => $display,
                 'matchingRoutePath' => $routePath,
@@ -81,19 +70,22 @@ class NavUtil {
         } else if (!empty($before)) {
             $this->items = Util::insertInArrayBeforeKey($item, $before, $this->items);
         } else {
-            $this->items[$name] = $item[$name];
+            $this->addItems[$name] = $item[$name];
         }
 
     }
 
-    public function checkItemExists($name)
+    public function checkItemExists($name, $includeAddItems = true)
     {
-        return isset($this->items[$name]);
+        $itemsToCheck = array_merge($this->items, $this->addItems);
+        return isset($itemsToCheck[$name]);
     }
 
     public function getNav($render = false, $activeKey = null, $returnKeys = [], $excludeKeys = [])
     {
         $this->nav = $this->navStructure($returnKeys, $excludeKeys);
+
+        $this->limitDisplayNameLength();
 
         if ($render) {
             return $this->renderNav($activeKey);
@@ -102,11 +94,25 @@ class NavUtil {
         return $this->nav;
     }
 
+    protected function limitDisplayNameLength()
+    {
+        $this->nav = array_map(function($item){
+            $item['display'] = Util::getStringSnippet(
+                $item['display'], 20, true
+            );
+            return $item;
+        }, $this->nav);
+    }
+
     protected function renderNav($activeKey = null)
     {
         $this->addActiveClass($activeKey);
 
-        return Util::getTemplateContents(SRC_DIR . 'tokenHTML/nav.php', $this->nav);
+        return Util::getTemplateContents(
+            $this->bc, 
+            $this->navRenderPath, 
+            $this->nav
+        );
     }
 
     protected function addActiveClass($key)
@@ -115,6 +121,23 @@ class NavUtil {
             return;
         }
 
-        $this->nav[$key]['attributes']['class'] .= ' ' . self::activeClass;
+        $this->nav[$key]['attributes']['class'] .= ' ' . $this->navActiveClass;
+    }
+    
+    public function setNavRenderPath($path)
+    {
+        $this->navRenderPath = $path;
+        return $this;
+    }
+    
+    public function setNavActiveClass($class)
+    {
+        $this->navActiveClass = $class;
+        return $this;
+    }
+
+    public function setAddItemsLast($bool = true)
+    {
+        $this->addItemsLast = (bool) $bool;
     }
 }

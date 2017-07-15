@@ -1,0 +1,1 @@
+app.removeonclick={init:function(e){this.el=e,this.loadListener()},loadListener:function(){this.el.on("click",function(e){e.preventDefault(),$(this).remove()})}};

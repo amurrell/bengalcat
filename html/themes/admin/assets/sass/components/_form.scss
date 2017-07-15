@@ -1,0 +1,30 @@
+label {
+    display: block;
+}
+
+input {
+    display: block;
+    border-radius: 0;
+    border: 1px rgba($grey-med, .2) solid;
+    background: rgba(#000, .2);
+    line-height: 30px;
+    font-size: 1.2em;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+.form-login {
+    background: rgba(#000, .3);
+    padding: 30px;
+    
+    button {
+        background: none;
+        border: 3px solid #fff;
+        color: #fff;
+        border-radius: 0px;
+        padding: 10px 0px;
+        margin: 20px auto;
+        display: block;
+        width: 100%;
+    }
+}

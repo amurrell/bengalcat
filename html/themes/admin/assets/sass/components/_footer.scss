@@ -1,0 +1,30 @@
+footer {
+    
+    .footer-bar {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: $brown-lightest;
+        color: $brown;
+        
+        .top {
+            position: absolute;
+            top: 0;
+            right: 20px;
+        }
+        
+        .footer-bar-inner {
+            text-align: center;
+            height: 35px;
+            line-height: 35px;
+            
+            .copyright {
+                a {
+                    font-family: $font-purisa;
+                }
+            }
+        }
+        
+    }
+}

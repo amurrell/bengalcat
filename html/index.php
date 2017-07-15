@@ -1,7 +1,7 @@
 <?php
 
 define('APP_DIR', dirname(__FILE__) . '/../app/');
-require APP_DIR . 'ClassLoader.php';
+require APP_DIR . '/core/ClassLoader.php';
 
 /**
  * Autoload Classes
@@ -11,11 +11,11 @@ require APP_DIR . 'ClassLoader.php';
  * @note Do not name custom classes the same as app classes
  */
 spl_autoload_register( function ($className) {
-    $loader = new ClassLoader($className, APP_DIR, ['..', '.', 'config']);
+    $loader = new \Bc\App\Core\ClassLoader($className, APP_DIR, ['..', '.', 'config']);
     $loader->doRequire();
 });
 
 
 
 // Instantiate Core
-$bc = new \Bc\App\Core(dirname(__FILE__));
+$bc = new \Bc\App\Core\Core(dirname(__FILE__));

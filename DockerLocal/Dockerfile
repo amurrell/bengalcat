@@ -16,7 +16,18 @@ RUN         apt-get update && \
 # Install more stuff
 RUN	apt-get update && \
 	apt-get install -y php-curl && \
-	apt-get install -y php-mysql
+	apt-get install -y php-mysql && \
+	apt-get -y install php-pear && \
+	apt-get -y install php7.0-dev && \
+	apt-get -y install libcurl3-openssl-dev && \
+	apt-get -y install libyaml-dev && \
+	apt-get -y install php7.0-zip && \
+        apt-get -y install memcached && \
+        apt-get -y install php-memcached
+
+RUN pear config-set php_ini /etc/php/7.0/fpm/php.ini
+RUN pecl config-set php_ini /etc/php/7.0/fpm/php.ini
+RUN printf "\n" | pecl install yaml-2.0.0
 
 # export var for nano to work in command line
 ENV TERM xterm

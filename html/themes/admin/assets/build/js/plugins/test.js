@@ -1,0 +1,1 @@
+app.test={init:function(t){this.el=t,console.log("testing")}};

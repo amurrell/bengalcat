@@ -2,7 +2,7 @@
 
 namespace Bc\App\Queries;
 
-use Bc\App\DbExtender;
+use Bc\App\Core\DbExtender;
 
 class ArticleDbQueries extends DbExtender {
 

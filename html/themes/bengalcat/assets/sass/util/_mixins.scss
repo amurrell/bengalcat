@@ -1,0 +1,157 @@
+
+/* ==========================================================================
+   Breakpoint helper
+
+	Usage:
+	body {
+		background-color: #fff;
+		@include bp(sm) {
+			background-color: #ccc;
+		}
+		@include bp(md) {
+			background-color: #999;
+		}
+		@include bp(lg) {
+			background-color: #666;
+		}
+	}
+   ========================================================================== */
+
+@mixin bp($break) {
+	@if $break == xxl {
+		@media (min-width: $screen-xxl) { @content; }
+	}
+	@else if $break == xl {
+		@media (min-width: $screen-xl) { @content; }
+	}
+	@else if $break == lg {
+		@media (min-width: $screen-lg) { @content; }
+	}
+	@else if $break == md {
+		@media (min-width: $screen-md) { @content; }
+	}
+	@else if $break == sm {
+		@media (min-width: $screen-sm) { @content; }
+	}
+	@else if $break == xs {
+		@media (min-width: $screen-xs) { @content; }
+	}
+	@else {
+		@media ($break) { @content; }
+	}
+}
+
+/* ==========================================================================
+   Reset Box Sizing
+
+	Use for third party html/css that doesn't work with 'border-box'
+	http://getbootstrap.com/getting-started/#third-parties
+   ========================================================================== */
+
+@mixin reset-box-sizing() {
+	&,
+	*,
+	*:before,
+	*:after {
+		box-sizing: content-box;
+	}
+}
+
+
+@mixin retina() {
+	@media only screen and (-webkit-min-device-pixel-ratio : 1.5), only screen and (min-device-pixel-ratio : 1.5) {
+		@content;
+	}
+}
+
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $asset-pipeline: false ) {
+    @font-face {
+        font-family: $font-family;
+        font-weight: $weight;
+        font-style: $style;
+
+        @if $asset-pipeline == true {
+            src: font-url('#{$file-path}.eot');
+            src: font-url('#{$file-path}.eot?#iefix')          format('embedded-opentype'),
+                font-url('#{$file-path}.woff')                format('woff'),
+                font-url('#{$file-path}.ttf')                 format('truetype'),
+                font-url('#{$file-path}.svg##{$font-family}') format('svg');
+        } @else {
+            src: url('#{$file-path}.eot');
+            src: url('#{$file-path}.eot?#iefix')               format('embedded-opentype'),
+                url('#{$file-path}.woff')                     format('woff'),
+                url('#{$file-path}.ttf')                      format('truetype'),
+                url('#{$file-path}.svg##{$font-family}')      format('svg');
+        }
+    }
+}
+
+
+@mixin vertical-align($value) {
+  position: relative;
+  top: $value;
+  -webkit-transform: translateY(- $value);
+  -ms-transform: translateY(- $value);
+  transform: translateY(- $value);
+}
+
+
+@mixin button-custom($background, $font-color, $hover-font-color: $font-color, $border-radius: 6px) {
+    background: $background;
+    border:none;
+    border-radius: $border-radius;
+    color: $font-color;
+    font-family: $font-roboto;
+    font-weight: bold;
+    transition: all .25s ease 0s;
+    
+    &:hover, &:active, &:focus {
+	background: lighten($background, 5%);
+	border-bottom-color: $background;
+	color: $hover-font-color;
+    }
+}
+
+@mixin content-icon($content) {
+	content: $content;
+	font: normal 16px/0px $fontawesome;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+@mixin content-icon-inline($content) {
+	content: $content;
+	font: normal 16px/0px $fontawesome;
+	display:inline-block;
+	vertical-align:top;
+	line-height:1;
+	margin-right: 5px;
+	font-weight:normal;
+	font-style:normal;
+	speak:none;
+	text-decoration:inherit;
+	text-transform:none;
+	text-rendering:optimizeLegibility;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+}
+
+@mixin attribute-icon( $after : false) {
+    @if $after == true {
+	right: -18px;
+    } @else {
+	left: -18px;
+    }
+    top: 50%;
+    position: absolute;
+    content: attr(data-fontawesome-icon);
+    font: normal 16px/0px $fontawesome;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}

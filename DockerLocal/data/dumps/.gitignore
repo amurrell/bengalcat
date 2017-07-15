@@ -1,3 +1,6 @@
 *
 !.gitignore
 !example-data.sql
+!bengal-cms-data.sql
+!bengal-admin-data.sql
+!bengal-auth-data.sql

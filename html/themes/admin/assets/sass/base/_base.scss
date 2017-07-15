@@ -1,0 +1,73 @@
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+body {
+    font-family: $font-lato;
+    color: #555;
+    font-size: 18px;
+}
+
+a {
+    color: darken($gold, 5%);
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+    transition: border, color .3s ease 0s;
+
+    &:hover {
+        color: $brown;
+        text-decoration: none;
+        border-bottom: 2px solid $gold;
+    }
+}
+
+p {
+    font-size: 1.3em;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-lato;
+    margin: 50px 0 50px 30px;
+    padding-bottom:10px;
+    color: $brown;
+    position: relative;
+    
+    &:before {
+        content: '';
+        margin-left: 20px;
+        background: $gold;
+        width: 5px;
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -40px;
+    }
+}
+
+ol, ul {
+    margin-top: 50px;
+}
+
+ol {
+    li {
+        margin-bottom: 20px;
+    }
+}
+
+hr {
+    margin: 60px auto;
+}
